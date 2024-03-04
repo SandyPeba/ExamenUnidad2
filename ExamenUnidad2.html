@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Registro</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+        }
+        label, input, select, button {
+            display: block;
+            margin-bottom: 10px;
+            height: 100%;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Formulario de Registro</h1>
+        <form id="registroForm">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+
+            <label for="telefono">Teléfono:</label>
+            <input type="tel" id="telefono" name="telefono" required>
+
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="escuela">Escuela:</label>
+            <select id="escuela" name="escuela" onchange="verificarEscuela()">
+                <option value="escuela1">Seleccionar...</option>
+                <option value="escuela1">Cecytem</option>
+                <option value="escuela2">Conalep</option>
+                <option value="escuela3">Cetmar</option>
+                <option value="escuela4">Otra escuela</option>
+            </select>
+            <div id="otraEscuela" style="display: none;">
+                <label for="nombreEscuela">Nombre de la nueva escuela:</label>
+                <input type="text" id="nombreEscuela" name="nombreEscuela">
+            </div>
+            <label for="carrera">Carrera:</label>
+            <select id="carrera" name="carrera" onchange="verificarCarrera()">
+                <option value="escuela1">Seleccionar...</option>
+                <option value="carrera1">Carrera 1</option>
+                <option value="carrera2">Carrera 2 </option>
+                <option value="carrera3">Carrera 3</option>
+                <option value="carrera4">Carrera 4</option>
+                <option value="carrera5">Otra Carrera</option>
+            </select>
+            <div id="otraCarrera" style="display: none;">
+                <label for="nombreCarrera">Nombre de la nueva carrera:</label>
+                <input type="text" id="nombreCarrera" name="nombreCarrera">
+            </div>
+            <button type="button" onclick="guardarDatos()">Enviar</button>
+        </form>
+    </div>
+    <div id="datos" style="position: fixed; bottom: 0; right: 0; width: 300px; height: 200px; overflow: auto;"></div> <!-- Modificamos el div para mostrar los datos en la esquina inferior -->
+
+    <script>
+        var registro = 0; 
+        function verificarEscuela() {
+            var escuela = document.getElementById('escuela').value;
+            if (escuela === 'escuela4') {
+                document.getElementById('otraEscuela').style.display = 'block';
+            } else {
+                document.getElementById('otraEscuela').style.display = 'none';
+            }
+        }
+
+        function verificarCarrera() {
+            var carrera = document.getElementById('carrera').value;
+            if (carrera === 'carrera5') {
+                document.getElementById('otraCarrera').style.display = 'block';
+            } else {
+                document.getElementById('otraCarrera').style.display = 'none';
+            }
+        }
+
+        function guardarDatos() {
+            registro++;
+            var nombre = document.getElementById('nombre').value;
+            var telefono = document.getElementById('telefono').value;
+            var email = document.getElementById('email').value;
+            var escuela = document.getElementById('escuela').value;
+            if (escuela === 'escuela4') {
+                escuela = document.getElementById('nombreEscuela').value;
+            }
+            var carrera = document.getElementById('carrera').value;
+            if (carrera === 'carrera5') {
+                carrera = document.getElementById('nombreCarrera').value;
+            }
+            var datos = "Registro #: " + registro + "<br>Nombre: " + nombre + "<br>Teléfono: " + telefono + "<br>Correo Electrónico: " + email + "<br>Escuela: " + escuela + "<br>Carrera: " + carrera;
+            document.getElementById('datos').innerHTML += datos;
+
+            
+            document.getElementById('nombre').value = '';
+            document.getElementById('telefono').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('escuela').value = 'escuela1';
+            document.getElementById('nombreEscuela').value = '';
+            document.getElementById('carrera').value = 'carrera1';
+            document.getElementById('nombreCarrera').value = '';
+            document.getElementById('otraEscuela').style.display = 'none';
+            document.getElementById('otraCarrera').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+
